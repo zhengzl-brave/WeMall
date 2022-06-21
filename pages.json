@@ -8,6 +8,12 @@
   }, {
     "path": "pages/mine/mine"
   }],
+  "subPackages": [{
+    "root": "subpkg",
+    "pages": [{
+      "path": "goods_detail/goods_detail"
+    }]
+  }],
   "globalStyle": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "WeMall",
