@@ -19,6 +19,8 @@ $http.beforeRequest = function(options) {
 $http.afterRequest = function() {
   uni.hideLoading()
 }
+import { showMsg } from './utils'
+uni.$showMsg = showMsg
 
 App.mpType = 'app'
 
