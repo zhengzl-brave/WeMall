@@ -1,5 +1,8 @@
 <template>
   <view>
+    <!-- 搜索模块 -->
+    <smart-search @handleSearch="handleSearch"></smart-search>
+    <!-- 内容滑动模块 -->
     <view class="scroll-view-wrap">
       <scroll-view scroll-y="true" class="left-wrap" :style="{height: wh + 'px'}">
         <block v-for="(item, index) in cateList" :key="index">
@@ -39,7 +42,8 @@
     onLoad() {
       // 获取当前系统信息
       const sysInfo = uni.getSystemInfoSync()
-      this.wh = sysInfo.windowHeight
+      // 视口高度减去搜索50px
+      this.wh = sysInfo.windowHeight - 50
       // 获取分类数据
       this.getCateList()
     },
@@ -63,6 +67,11 @@
       handleClickThird(item) {
         uni.navigateTo({
           url:'/subpkg/goods_list/goods_list?cid=' + item.cat_id
+        })
+      },
+      handleSearch() {
+        uni.navigateTo({
+          url:'/subpkg/search/search'
         })
       }
     }

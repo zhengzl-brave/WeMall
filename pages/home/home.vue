@@ -1,5 +1,9 @@
 <template>
   <view>
+    <!-- 搜索 -->
+    <view class="search-wrap">
+      <smart-search @handleSearch="handleSearch"></smart-search>
+    </view>
     <!-- 轮播 -->
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
       <swiper-item v-for="(item, index) in swiperList" :key="index">
@@ -22,10 +26,12 @@
         <!-- 楼层图片 -->
         <view class="floor-img-box">
           <navigator class="img-left" :url="item.product_list[0].url">
-            <image :src="item.product_list[0].image_src" :style="{width: item.product_list[0].image_width + 'rpx'}" mode="widthFix"></image>
+            <image :src="item.product_list[0].image_src" :style="{width: item.product_list[0].image_width + 'rpx'}"
+              mode="widthFix"></image>
           </navigator>
           <view class="img-right">
-            <navigator class="img-right-item" v-for="(child, key) in item.product_list.slice(1,5)" :key="key" :url="child.url">
+            <navigator class="img-right-item" v-for="(child, key) in item.product_list.slice(1,5)" :key="key"
+              :url="child.url">
               <image :src="child.image_src" :style="{width: child.image_width + 'rpx'}" mode="widthFix"></image>
             </navigator>
           </view>
@@ -55,24 +61,30 @@
     methods: {
       // 获取轮播数据
       async getSwiperList() {
-        const { data:res } = await uni.$http.get('/api/public/v1/home/swiperdata')
-        if(res.meta.status !== 200) {
+        const {
+          data: res
+        } = await uni.$http.get('/api/public/v1/home/swiperdata')
+        if (res.meta.status !== 200) {
           return uni.$showMsg()
         }
         this.swiperList = res.message
       },
       // 获取分类导航数据
       async getNavList() {
-        const { data: res } = await uni.$http.get('/api/public/v1/home/catitems')
-        if(res.meta.status !== 200) {
+        const {
+          data: res
+        } = await uni.$http.get('/api/public/v1/home/catitems')
+        if (res.meta.status !== 200) {
           return uni.$showMsg()
         }
         this.navList = res.message
       },
       // 获取楼层数据
       async getFloorList() {
-        const { data: res } = await uni.$http.get('/api/public/v1/home/floordata')
-        if(res.meta.status !== 200) {
+        const {
+          data: res
+        } = await uni.$http.get('/api/public/v1/home/floordata')
+        if (res.meta.status !== 200) {
           return uni.$showMsg()
         }
         res.message.forEach(floor => {
@@ -84,49 +96,66 @@
       },
       // 点击分类跳转
       handleNav(item) {
-        switch(item.name) {
+        switch (item.name) {
           case "分类":
             uni.switchTab({
-              url:'/pages/cate/cate'
+              url: '/pages/cate/cate'
             })
             break
         }
+      },
+      handleSearch() {
+        uni.navigateTo({
+          url: '/subpkg/search/search'
+        })
       }
     }
   }
 </script>
 
 <style lang="scss">
-swiper {
-  height: 330rpx;
-  .swiper-item, image {
-    height: 100%;
-    width: 100%;
+  .search-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 999;
   }
-}
-.nav-list {
-  display: flex;
-  justify-content: space-around;
-  margin: 15px 0;
-  .nav-img {
-    width: 128rpx;
-    height: 140rpx;
-  }
-}
-.floor-list {
-  .floor-img {
-    width: 100%;
-    height: 60rpx;
-  }
-  .floor-img-box {
-    display: flex;
-    padding-left: 10rpx;
-    .img-right {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      padding-left: 10rpx;
+  swiper {
+    height: 330rpx;
+
+    .swiper-item,
+    image {
+      height: 100%;
+      width: 100%;
     }
   }
-}
+
+  .nav-list {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0;
+
+    .nav-img {
+      width: 128rpx;
+      height: 140rpx;
+    }
+  }
+
+  .floor-list {
+    .floor-img {
+      width: 100%;
+      height: 60rpx;
+    }
+
+    .floor-img-box {
+      display: flex;
+      padding-left: 10rpx;
+
+      .img-right {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding-left: 10rpx;
+      }
+    }
+  }
 </style>
