@@ -13,7 +13,12 @@
     "pages": [{
       "path": "goods_detail/goods_detail"
     }, {
-      "path": "goods_list/goods_list"
+      "path": "goods_list/goods_list",
+      "style": {
+        "onReachBottomDistance": 150,
+        "enablePullDownRefresh": true,
+        "backgroundColor": "#F8F8F8"
+      }
     }, {
       "path": "search/search"
     }]
