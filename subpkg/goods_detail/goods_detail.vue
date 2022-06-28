@@ -29,6 +29,7 @@
 </template>
 
 <script>
+  import { mapMutations, mapState, mapGetters } from 'vuex'
   export default {
     data() {
       return {
@@ -42,7 +43,7 @@
         }, {
           icon: 'cart',
           text: '购物车',
-          info: 2
+          info: 0
         }],
         buttonGroup: [{
             text: '加入购物车',
@@ -57,11 +58,25 @@
         ]
       };
     },
+    computed: {
+      ...mapState('cart', ['cart']),
+      ...mapGetters('cart', ['total'])
+    },
+    watch: {
+      // 监听total改变购物车徽标的数值
+      total: {
+        handler(val) {
+          this.options.find(x => x.text === '购物车').info = val
+        },
+        immediate: true
+      }
+    },
     onLoad(option) {
       const goods_id = option.goods_id
       this.getGoodsDetail(goods_id)
     },
     methods: {
+      ...mapMutations('cart', ['addCart']),
       async getGoodsDetail(goods_id) {
         const {
           data: res
@@ -90,7 +105,20 @@
         }
       },
       // 点击底部导航右侧按钮
-      buttonClick() {}
+      buttonClick(e) {
+        if(e.content.text === '加入购物车') {
+          // 每个商品对象包含 goods_id, goods_name, goods_price, goods_count, goods_small_logo, goods_state
+          const goods = {
+            goods_id: this.goodsInfo.goods_id,
+            goods_name: this.goodsInfo.goods_name,
+            goods_price: this.goodsInfo.goods_price,
+            goods_count: 1,
+            goods_small_logo: this.goodsInfo.goods_small_logo,
+            goods_state: true
+          }
+          this.addCart(goods)
+        }
+      }
     }
   }
 </script>

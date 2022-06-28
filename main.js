@@ -2,6 +2,7 @@
 // #ifndef VUE3
 import Vue from 'vue'
 import App from './App'
+import store from '@/store/store.js'
 
 Vue.config.productionTip = false
 
@@ -25,7 +26,8 @@ uni.$showMsg = showMsg
 App.mpType = 'app'
 
 const app = new Vue({
-    ...App
+    ...App,
+    store
 })
 app.$mount()
 // #endif

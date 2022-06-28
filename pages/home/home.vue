@@ -42,7 +42,9 @@
 </template>
 
 <script>
+  import carBar from '@/mixins/cart_bar.js'
   export default {
+    mixins: [carBar],
     data() {
       return {
         // 轮播
