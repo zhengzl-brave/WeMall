@@ -3,6 +3,15 @@ export default {
   computed: {
     ...mapGetters('cart', ['total'])
   },
+  watch: {
+    total: {
+      handler(val) {
+        if(val) {
+          this.getCartBdge()
+        }
+      }
+    }
+  },
   onShow() {
     this.getCartBdge()
   },
