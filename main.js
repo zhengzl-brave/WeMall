@@ -15,6 +15,12 @@ $http.beforeRequest = function(options) {
   uni.showLoading({
     title: '数据加载中...'
   })
+  // 请求有全选的接口请求头添加header
+  if(options.url.indexOf('/my/') !== -1) {
+    options.header = {
+      Authorization: store.state.user.token
+    }
+  }
 }
 // 响应拦截
 $http.afterRequest = function() {
