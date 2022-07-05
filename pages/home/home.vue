@@ -43,6 +43,7 @@
 
 <script>
   import carBar from '@/mixins/cart_bar.js'
+  import { banner } from '@/api/index.js'
   export default {
     mixins: [carBar],
     data() {
@@ -63,9 +64,14 @@
     methods: {
       // 获取轮播数据
       async getSwiperList() {
-        const {
-          data: res
-        } = await uni.$http.get('/api/public/v1/home/swiperdata')
+        // const {
+        //   data: res
+        // } = await uni.$http.get('/api/public/v1/home/swiperdata')
+        // if (res.meta.status !== 200) {
+        //   return uni.$showMsg()
+        // }
+        // this.swiperList = res.message
+        const { data: res } = await banner()
         if (res.meta.status !== 200) {
           return uni.$showMsg()
         }
